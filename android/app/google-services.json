@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "994813429628",
+    "project_id": "agileproject-bynas",
+    "storage_bucket": "agileproject-bynas.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:994813429628:android:06735090267bebc3dcc6f9",
+        "android_client_info": {
+          "package_name": "com.example.bynas"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0HSmBhcfZUFB_ja0Et6ECWjhytXuins8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
