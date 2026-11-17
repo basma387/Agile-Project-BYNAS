@@ -1,5 +1,8 @@
 import 'package:bynas/firebase_options.dart';
+import 'package:bynas/screens/form.dart';
+import 'package:bynas/screens/jobBoard.dart';
 import 'package:bynas/screens/login.dart';
+import 'package:bynas/screens/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -16,7 +19,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
     debugShowCheckedModeBanner: false,
-      home: const Login(),
+      home: const SplashScreen(),
+      routes:{
+        '/splash': (context)=> SplashScreen(),
+        '/login': (context)=> LoginScreen(),
+        '/board': (context)=> JobBoard(),
+      }
     );
   }
 }
