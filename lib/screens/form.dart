@@ -1,7 +1,9 @@
 import 'package:bynas/theme/colors.dart';
-import 'package:bynas/theme/textStyles.dart';
 import 'package:flutter/material.dart';
 
+import '../theme/colors.dart';
+
+// FormScreen: Screen for creating a new job post
 class FormScreen extends StatefulWidget {
   const FormScreen({super.key});
 
@@ -11,181 +13,287 @@ class FormScreen extends StatefulWidget {
 
 class _FormScreenState extends State<FormScreen> {
 
+  // GlobalKey used to manage form validation
   final formKey = GlobalKey<FormState>();
 
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  // Controllers used to retrieve user input
+  final companyNameController = TextEditingController();
+  final jobDescriptionController = TextEditingController();
+  final requirementsController = TextEditingController();
+  final deadlineController = TextEditingController();
 
-  bool isPasswordVisible = false;
-
+  // Dispose controllers to release resources
   @override
   void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
+    companyNameController.dispose();
+    jobDescriptionController.dispose();
+    requirementsController.dispose();
+    deadlineController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      // Screen background color
+      backgroundColor:ColorManager.beige,
+
+      // Top navigation bar
+      appBar: AppBar(
+        backgroundColor:ColorManager.beige,
+        elevation: 0,
+
+        // Back button to return to the previous screen
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios_new,
+            color: ColorManager.darkBlue,
+          ),
+          onPressed: () => Navigator.pop(context),
+        ),
+
+        // Screen title
+        title: const Text(
+          'Create Job Post',
+          style: TextStyle(
+            color: ColorManager.darkBlue,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+
+      // SafeArea prevents content from overlapping system UI
       body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(24),
-            child: Form(
-              key: formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
+        child: SingleChildScrollView(
+          // Add padding around the form content
+          padding: const EdgeInsets.all(24),
 
-                  const Icon(
-                    Icons.work_outline,
-                    size: 70,
-                    color: Colors.blue,
-                  ),
+          child: Form(
+            // Connect the form with the GlobalKey
+            key: formKey,
 
-                  const SizedBox(height: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
 
-                  const Text(
-                    'Welcome Back!',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
+                // Job-related icon
+                Center(
+                  child: Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: ColorManager.blue.withOpacity(0.12),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(
+                      Icons.work_outline_rounded,
+                      size: 45,
+                      color: ColorManager.blue,
                     ),
                   ),
+                ),
 
-                  const SizedBox(height: 8),
+                const SizedBox(height: 18),
 
-                  const Text(
-                    'Login to your account',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 16,
-                    ),
+                // Main heading
+                const Text(
+                  'Post a New Opportunity',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: ColorManager.darkBlue,
+                  ),
+                ),
+
+                const SizedBox(height: 6),
+
+                // Subtitle
+                const Text(
+                  'Fill in the details below for the job post.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: ColorManager.grey,
+                    fontSize: 14,
+                  ),
+                ),
+
+                const SizedBox(height: 30),
+
+                // 1. Company Name Field
+                TextFormField(
+                  controller: companyNameController,
+                  decoration: _inputDecoration(
+                    'Company Name',
+                    'Enter company name',
+                    Icons.business_outlined,
                   ),
 
-                  const SizedBox(height: 35),
+                  // Validate that the company name is not empty
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Please enter the company name';
+                    }
+                    return null;
+                  },
+                ),
 
-                  // Email Field
-                  TextFormField(
-                    controller: emailController,
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                      labelText: 'Email',
-                      hintText: 'Enter your email',
-                      prefixIcon: const Icon(Icons.email_outlined),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your email';
-                      }
+                const SizedBox(height: 20),
 
-                      if (!RegExp(
-                        r'^[^@]+@[^@]+\.[^@]+$',
-                      ).hasMatch(value)) {
-                        return 'Please enter a valid email';
-                      }
-
-                      return null;
-                    },
+                // 2. Job Description Field
+                TextFormField(
+                  controller: jobDescriptionController,
+                  maxLines: 3,
+                  decoration: _inputDecoration(
+                    'Job Description',
+                    'Describe the role and responsibilities',
+                    Icons.description_outlined,
                   ),
 
-                  const SizedBox(height: 20),
+                  // Validate that the job description is not empty
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Please enter the job description';
+                    }
+                    return null;
+                  },
+                ),
 
-                  // Password Field
-                  TextFormField(
-                    controller: passwordController,
-                    obscureText: !isPasswordVisible,
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      hintText: 'Enter your password',
-                      prefixIcon: const Icon(Icons.lock_outline),
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          isPasswordVisible
-                              ? Icons.visibility
-                              : Icons.visibility_off,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            isPasswordVisible =
-                                !isPasswordVisible;
-                          });
-                        },
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your password';
-                      }
+                const SizedBox(height: 20),
 
-                      if (value.length < 6) {
-                        return 'Password must be at least 6 characters';
-                      }
-
-                      return null;
-                    },
+                // 3. Requirements Field
+                TextFormField(
+                  controller: requirementsController,
+                  maxLines: 3,
+                  decoration: _inputDecoration(
+                    'Requirements',
+                    'List the required skills',
+                    Icons.list_alt_rounded,
                   ),
 
-                  const SizedBox(height: 30),
+                  // Validate that the requirements field is not empty
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Please enter the requirements';
+                    }
+                    return null;
+                  },
+                ),
 
-                  // Login Button
-                  SizedBox(
-                    height: 50,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (formKey.currentState!.validate()) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Login Form is Valid!'),
+                const SizedBox(height: 20),
+
+                // 4. Deadline Field
+                TextFormField(
+                  controller: deadlineController,
+                  decoration: _inputDecoration(
+                    'Deadline',
+                    'e.g. 2026-12-31',
+                    Icons.calendar_today_outlined,
+                  ),
+
+                  // Validate that the deadline is not empty
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Please enter the deadline';
+                    }
+                    return null;
+                  },
+                ),
+
+                const SizedBox(height: 35),
+
+                // 5. Submit Button
+                SizedBox(
+                  height: 52,
+                  child: ElevatedButton(
+
+
+                    onPressed: () {
+
+                      // Check if all form fields are valid
+                      if (formKey.currentState!.validate()) {
+
+                        // Display success message when validation passes
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              'Job Post Submitted Successfully!',
                             ),
-                          );
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
+                            backgroundColor: ColorManager.darkBlue,
+                          ),
+                        );
+                      }
+                    },
+
+                    // Submit button styling
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: ColorManager.darkBlue,
+                      foregroundColor: Colors.white,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                      child: const Text(
-                        'Login',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
+                    ),
+
+                    child: const Text(
+                      'Submit Post',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-
-                  const SizedBox(height: 20),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text("Don't have an account? "),
-                      TextButton(
-                        onPressed: () {
-                          // Navigate to Sign Up Screen
-                        },
-                        child: const Text('Sign Up'),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  // Helper method to create a consistent style for all input fields
+  InputDecoration _inputDecoration(
+      String label,
+      String hint,
+      IconData icon,
+      ) {
+    return InputDecoration(
+
+      labelText: label,
+
+      hintText: hint,
+
+      // Prefix icon
+      prefixIcon: Icon(
+        icon,
+        color: ColorManager.blue,
+      ),
+
+      filled: true,
+      fillColor: Colors.white,
+
+      // Default border style
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: const BorderSide(
+          color: ColorManager.grey,
+        ),
+      ),
+
+      // Border style when the field is enabled
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide(
+          color: ColorManager.grey.withOpacity(0.6),
+        ),
+      ),
+
+      // Border style when the field is focused
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: const BorderSide(
+          color: ColorManager.darkBlue,
+          width: 2,
         ),
       ),
     );
