@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
         '/splash': (context)=> SplashScreen(),
         '/login': (context)=> LoginScreen(),
         '/board': (context)=> JobBoard(),
+        
       }
     );
   }
