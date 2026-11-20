@@ -24,11 +24,16 @@ class MyApp extends StatelessWidget {
         '/splash': (context)=> SplashScreen(),
         '/login': (context)=> LoginScreen(),
         '/board': (context)=> JobBoard(),
+<<<<<<< HEAD
         
+=======
+        '/form': (context)=> FormScreen(),
+>>>>>>> e510b130cf326fc1c93e7b593c5b7ff776ef8f8c
       }
     );
   }
 }
+
 
 
 
