@@ -1,6 +1,6 @@
 import 'package:bynas/firebase_options.dart';
 import 'package:bynas/screens/form.dart';
-import 'package:bynas/screens/jobBoard.dart';
+import 'package:bynas/screens/jobBoard_company.dart';
 import 'package:bynas/screens/login.dart';
 import 'package:bynas/screens/splash.dart';
 import 'package:flutter/material.dart';
@@ -23,8 +23,9 @@ class MyApp extends StatelessWidget {
       routes:{
         '/splash': (context)=> SplashScreen(),
         '/login': (context)=> LoginScreen(),
-        '/board': (context)=> JobBoard(),
+        '/board': (context)=> JobBoardCompany(),
         '/form': (context)=> FormScreen(),
+
       }
     );
   }

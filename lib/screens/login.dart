@@ -168,7 +168,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         const SizedBox(height: 24),
 
                         // Email Label
-                        Text("University Email or ID", style: TextStyles.subtitleBlack),
+                        Text("Email or ID", style: TextStyles.subtitleBlack),
                         const SizedBox(height: 8),
                         
                         // Email Field
