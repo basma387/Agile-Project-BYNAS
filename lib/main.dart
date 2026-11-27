@@ -5,7 +5,7 @@ import 'package:bynas/screens/login.dart';
 import 'package:bynas/screens/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-
+import 'package:bynas/screens/signup_main.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized;
@@ -19,7 +19,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
     debugShowCheckedModeBanner: false,
-      home: const SplashScreen(),
+     // home: const SplashScreen(),
+     home: const SignupMainScreen(),
       routes:{
         '/splash': (context)=> SplashScreen(),
         '/login': (context)=> LoginScreen(),

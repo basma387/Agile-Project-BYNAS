@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../widegt/gradlaunch_header_box.dart';
 import '../widegt/selected_role_pill.dart';
 import '../widegt/selection_option_box.dart';
+import 'signup_company.dart';
+import 'signup_student.dart';
 
 class SignupMainScreen extends StatefulWidget {
   const SignupMainScreen({super.key});
@@ -28,13 +30,27 @@ class _SignupMainScreenState extends State<SignupMainScreen> {
               SelectionOptionBox(
                 label: 'Student',
                 isSelected: selectedRole == 'Student',
-                onTap: () => setState(() => selectedRole = 'Student'),
+                onTap: () {
+  setState(() => selectedRole = 'Student');
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => const SignUpStudent()),
+  );
+},
+               // onTap: () => setState(() => selectedRole = 'Student'),
               ),
               const SizedBox(height: 16),
               SelectionOptionBox(
                 label: 'Company',
                 isSelected: selectedRole == 'Company',
-                onTap: () => setState(() => selectedRole = 'Company'),
+                onTap: () {
+  setState(() => selectedRole = 'Company');
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => const SignupCompanyScreen()),
+  );
+},
+               // onTap: () => setState(() => selectedRole = 'Company'),
               ),
               const Spacer(),
               Align(
